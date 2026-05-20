@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web MCP & Debugging Workshop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. PALETA DE COLORES Y VARIABLES (Tokyo Night / Premium Carbon) */
+        :root {
+            --bg-dark: #0a0e14;
+            --bg-card: #151b23;
+            --border-color: #30363d;
+            --accent-blue: #7aa2f7;
+            --accent-pink: #f7768e;
+            --accent-green: #9ece6a;
+            --accent-purple: #bb9af3;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #484f58;
+            --glow: 0 0 20px rgba(122, 162, 247, 0.2);
+        }
+
+        /* 2. CONFIGURACIÓN BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        /* 3. CONTENEDOR DE DIAPOSITIVAS */
+        .presentation-deck {
+            flex-grow: 1;
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+
+        /* Diapositivas con display: none por defecto para garantizar que NO se sobrepongan jamás */
+        .slide {
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 3rem 4.5rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        /* Clase activa con display: flex y animación de entrada fluida */
+        .slide.active {
+            display: flex;
+            animation: slideFadeIn 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            z-index: 10;
+        }
+
+        @keyframes slideFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Contenedor interno que maneja el centrado vertical inteligente */
+        .slide-content {
+            width: 100%;
+            margin: auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Barra de scroll estilizada Tokyo Night */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+
+        /* DISEÑO DE FONDOS ABSTRACTOS */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -15%;
+            right: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(122, 162, 247, 0.08) 0%, transparent 75%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 4. TIPOGRAFÍA Y ESTRUCTURAS DE TEXTO */
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .slide-title {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent-blue);
+            text-shadow: var(--glow);
+            width: 100%;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        /* 5. MAQUETACIÓN DE DIAPOSITIVAS ESPECÍFICAS */
+        
+        /* Portada */
+        .slide-cover {
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .slide-cover h1 {
+            font-size: 4.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-cover p {
+            font-size: 1.5rem;
+            max-width: 850px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Perfil de Speaker (Sobre Mí) */
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--accent-pink);
+            box-shadow: 0 0 30px rgba(247, 118, 142, 0.3);
+            background-color: var(--bg-card);
+        }
+
+        /* Fallback elegante si la foto fallara temporalmente */
+        .avatar-fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid var(--accent-pink);
+            box-shadow: 0 0 30px rgba(247, 118, 142, 0.3);
+            background-color: var(--bg-card);
+            align-items: center;
+            justify-content: center;
+            font-size: 5.5rem;
+            color: var(--accent-pink);
+        }
+
+        .profile-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #f0f6fc;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .profile-bio h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .profile-bio .subtitle {
+            color: var(--accent-pink);
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Dos Columnas Clásicas */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .bullet-list {
+            list-style: none;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .bullet-list li::before {
+            content: '\f105';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0.5rem;
+            top: 2px;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .bullet-list.green li::before { color: var(--accent-green); }
+        .bullet-list.pink li::before { color: var(--accent-pink); }
+        .bullet-list.purple li::before { color: var(--accent-purple); }
+
+        .image-showcase {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .image-showcase i {
+            font-size: 5rem;
+            color: var(--accent-pink);
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 15px rgba(247, 118, 142, 0.4));
+        }
+
+        /* Diapositivas de Sección (Separadores) */
+        .section-slide {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .section-slide h2 {
+            font-size: 3.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-slide hr {
+            width: 120px;
+            height: 5px;
+            background: var(--accent-purple);
+            border: none;
+            border-radius: 10px;
+            margin: 1.5rem auto;
+            box-shadow: 0 0 15px rgba(187, 154, 243, 0.5);
+        }
+
+        .section-slide p {
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+        }
+
+        /* Grid de Tarjetas (Grid/Tiles) */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Bloques de Código */
+        .code-container {
+            width: 100%;
+            background: #010409;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: #e6edf3;
+            margin-top: 1rem;
+        }
+
+        .code-keyword { color: #ff7b72; }
+        .code-string { color: #a5d6ff; }
+        .code-function { color: #d2a8ff; }
+        .code-comment { color: #8b949e; font-style: italic; }
+
+        /* Gráfico de barras */
+        .chart-box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .chart-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .chart-label {
+            width: 220px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .chart-track {
+            flex-grow: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            height: 45px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 1.5rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--bg-dark);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* 6. BARRA DE CONTROL DE PRESENTACIÓN (FOOTER) */
+        .presentation-footer {
+            height: 60px;
+            background: #0d1117;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .footer-branding {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-branding span {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+
+        .footer-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 6px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            border-color: var(--accent-blue);
+            background-color: rgba(122, 162, 247, 0.1);
+        }
+
+        .slide-counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* Barra de progreso superior */
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* MEDIA QUERIES BASADAS EN ALTURA (OPTIMIZACIONES DE PANTALLA) */
+        @media (max-height: 850px) {
+            .slide {
+                padding: 2rem 3rem;
+            }
+            .slide-title {
+                font-size: 2.2rem;
+                margin-bottom: 1.2rem;
+            }
+            p {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+            .profile-photo-container {
+                width: 250px;
+                height: 250px;
+            }
+            .image-showcase {
+                min-height: 200px;
+            }
+            .image-showcase i {
+                font-size: 3.5rem;
+                margin-bottom: 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .card-icon {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            .code-container {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            .chart-box {
+                gap: 1rem;
+            }
+            .chart-track {
+                height: 38px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .slide {
+                padding: 1.5rem 2.5rem;
+            }
+            .slide-title {
+                font-size: 1.8rem;
+                margin-bottom: 0.8rem;
+            }
+            p, .bullet-list li {
+                font-size: 1rem;
+                margin-bottom: 0.6rem;
+            }
+            .profile-photo-container {
+                width: 180px;
+                height: 180px;
+            }
+            .image-showcase {
+                min-height: 150px;
+            }
+            .image-showcase i {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            .card-icon {
+                font-size: 1.8rem;
+                margin-bottom: 0.8rem;
+            }
+            .code-container {
+                padding: 0.8rem;
+                font-size: 0.8rem;
+            }
+            .chart-track {
+                height: 32px;
+            }
+        }
+
+        /* Responsive Ancho */
+        @media (max-width: 900px) {
+            .profile-layout, .two-column {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .profile-photo-container {
+                width: 200px;
+                height: 200px;
+            }
+            .slide-title {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+            .grid-cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONTENEDOR DE DIAPOSITIVAS -->
+    <div class="presentation-deck" id="deck">
+
+        <!-- Slide 1: Portada -->
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <div class="slide-cover">
+                    <h1>Web MCP & <span>Debugging</span></h1>
+                    <p>Potenciando la inteligencia de las aplicaciones web y la eficiencia en el desarrollo mediante Model Context Protocol.</p>
+                    <div style="font-family: 'JetBrains Mono', monospace; color: var(--accent-blue); margin-top: 1rem;">
+                        Presiona <span style="border: 1px solid var(--accent-blue); padding: 2px 6px; border-radius: 4px;">Espacio</span> o las <span style="border: 1px solid var(--accent-blue); padding: 2px 6px; border-radius: 4px;">← Flechas →</span> para navegar
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Presentación del Orador -->
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h2 class="slide-title">Sobre mí</h2>
+                <div class="profile-layout">
+                    <div class="profile-photo-container">
+                        <img src="https://avatars.githubusercontent.com/u/4331491?s=400&u=4f5a03bee658caa8cf73f0c454004b4de371e12e&v=4" alt="Foto de perfil real" class="profile-photo" id="speaker-photo">
+                        <div class="avatar-fallback" id="fallback-avatar">
+                            <i class="fa-solid fa-user-code"></i>
+                        </div>
+                        <div class="profile-badge">
+                            <i class="fa-solid fa-code" style="color: var(--accent-pink);"></i>
+                        </div>
+                    </div>
+                    <div class="profile-bio">
+                        <h3>Software Engineer</h3>
+                        <div class="subtitle">MSc in Engineering • Software Specialist</div>
+                        <ul class="bullet-list">
+                            <li><strong>GDE in Angular & Web Technologies:</strong> Reconocida oficialmente como experta por Google.</li>
+                            <li><strong>GitHub Star:</strong> Miembro activo y líder comunitaria global de código abierto.</li>
+                            <li><strong>Ingeniera de Software & MSc:</strong> Con un enfoque riguroso y apasionado en arquitectura de software, rendimiento y accesibilidad web.</li>
+                            <li><strong>Educadora y Creadora:</strong> Enfocada en simplificar arquitecturas complejas y guiar comunidades.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: El Problema fundamental -->
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h2 class="slide-title">El Problema: La Ceguera de la IA</h2>
+                <div class="two-column">
+                    <div>
+                        <p>A pesar de su potencia, los asistentes de código de Inteligencia Artificial actuales programan "aislados":</p>
+                        <ul class="bullet-list">
+                            <li><strong>Desconexión del DOM:</strong> No pueden comprobar si un elemento se renderizó, si es accesible o si está oculto.</li>
+                            <li><strong>Aislamiento de la consola:</strong> Ignoran de forma nativa los errores de ejecución que ocurren en el cliente.</li>
+                            <li><strong>Ausencia de métricas de red:</strong> No tienen idea de si los fetiches de red fallan o si hay latencia.</li>
+                            <li><strong>Generación a ciegas:</strong> Producen sugerencias de código perfectas que no se sincronizan con tu navegador activo.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase">
+                        <i class="fa-regular fa-eye-slash"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">La IA programa basándose en hipótesis de texto, no en la ejecución en tiempo real.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: ¿Qué es MCP? -->
+        <div class="slide" id="slide-4">
+            <div class="slide-content">
+                <h2 class="slide-title">¿Qué es Model Context Protocol?</h2>
+                <div class="grid-cards">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-network-wired"></i></div>
+                        <h3>El Conector</h3>
+                        <p>Un estándar de comunicación unificado que crea una tubería directa entre las IAs y los entornos de ejecución.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-purple);"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                        <h3>Ecosistema</h3>
+                        <p>Separa los clientes de IA de los proveedores de herramientas, permitiendo integraciones universales y reutilizables.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-pink);"><i class="fa-solid fa-database"></i></div>
+                        <h3>Contexto</h3>
+                        <p>Alimenta al modelo de forma dinámica con recursos, bases de datos, código e información interactiva.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Section Debugging Tradicional -->
+        <div class="slide section-slide" id="slide-5">
+            <div class="slide-content">
+                <h2>Debugging Tradicional</h2>
+                <hr>
+                <p>Cómo hemos depurado aplicaciones web hasta hoy y las limitaciones del flujo humano.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: El Límite del Debugging Tradicional -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <h2 class="slide-title">Debugging Tradicional: El Límite Humano</h2>
+                <div class="two-column">
+                    <div>
+                        <p>El flujo diario de desarrollo está fragmentado por constantes interrupciones de contexto:</p>
+                        <ul class="bullet-list pink">
+                            <li><strong>Análisis Manual de Trazas:</strong> Grabar el performance, buscar el hilo principal bloqueado e interpretar gráficos complejos de flama.</li>
+                            <li><strong>Excepciones de Runtime:</strong> Leer errores minificados en consola y rastrear manualmente el archivo original.</li>
+                            <li><strong>Auditoría Visual:</strong> Inspeccionar el DOM para verificar la accesibilidad (A11y) y contrastes de color uno a uno.</li>
+                            <li><strong>Context Switching constante:</strong> El tiempo se pierde saltando infinitamente entre el navegador, DevTools y el editor de código.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-pink);">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">El 50% del tiempo de desarrollo se consume reproduciendo y analizando errores de forma manual.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Section Debugging con Chrome DevTools MCP -->
+        <div class="slide section-slide" id="slide-7">
+            <div class="slide-content">
+                <h2>Chrome DevTools MCP</h2>
+                <hr>
+                <p>Dándole ojos cognitivos a la IA dentro del navegador activo del desarrollador.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Chrome DevTools MCP Server -->
+        <div class="slide" id="slide-8">
+            <div class="slide-content">
+                <h2 class="slide-title">El Copiloto con Ojos</h2>
+                <div class="two-column">
+                    <div>
+                        <p>El servidor oficial de Google permite a tu IDE o interfaz conversacional operar sobre una instancia real del navegador:</p>
+                        <ul class="bullet-list">
+                            <li><strong>Conexión local bidireccional:</strong> Conecta entornos como Cursor o Claude Desktop al puerto de depuración activa.</li>
+                            <li><strong>Acceso completo a CDP:</strong> El modelo puede interactuar de forma segura con el *Chrome DevTools Protocol* en tiempo real.</li>
+                            <li><strong>Lectura proactiva de logs:</strong> La IA detecta al instante excepciones de JS no controladas y fallas en llamadas REST/GraphQL.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-blue);">
+                        <i class="fa-brands fa-chrome" style="color: var(--accent-blue); filter: drop-shadow(0 0 15px rgba(122, 162, 247, 0.4));"></i>
+                        <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; text-align: center;">npx chrome-devtools-mcp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Setup Técnico con Chrome DevTools MCP -->
+        <div class="slide" id="slide-9">
+            <div class="slide-content">
+                <h2 class="slide-title">Setup de Chrome DevTools MCP</h2>
+                <div class="two-column">
+                    <div>
+                        <p>Paso 1: Arranca Chrome habilitando el puerto de depuración en una sesión aislada y segura:</p>
+                        <div class="code-container">
+                            chrome <span class="code-keyword">--remote-debugging-port</span>=9222 <span class="code-keyword">--user-data-dir</span>=/tmp/chrome-debug
+                        </div>
+                        <p style="margin-top: 1.5rem;">Paso 2: Conéctalo agregando el servidor a tu cliente de IA local (ej: `mcpServers.json`):</p>
+                        <div class="code-container">
+                            <span class="code-string">"chrome-devtools"</span>: {<br>
+                            &nbsp;&nbsp;<span class="code-string">"command"</span>: <span class="code-string">"npx"</span>,<br>
+                            &nbsp;&nbsp;<span class="code-string">"args"</span>: [<span class="code-string">"-y"</span>, <span class="code-string">"chrome-devtools-mcp"</span>]<br>
+                            }
+                        </div>
+                    </div>
+                    <div class="bullet-list">
+                        <h3>¿Por qué depurar aislados?</h3>
+                        <ul style="margin-top: 1rem;">
+                            <li><strong>Privacidad de credenciales:</strong> Protege tus cookies de producción, extensiones y contraseñas de accesos del modelo de IA.</li>
+                            <li><strong>Entorno determinista:</strong> Evita interferencias de extensiones de terceros en el análisis de trazas de performance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Superpoderes de Chrome DevTools MCP -->
+        <div class="slide" id="slide-10">
+            <div class="slide-content">
+                <h2 class="slide-title">Superpoderes de Diagnóstico</h2>
+                <div class="grid-cards">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-pink);"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3>Performance Audits</h3>
+                        <p>La IA graba trazas locales directamente, detectando cuellos de botella de renderizado e Interaction to Next Paint (INP).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-green);"><i class="fa-solid fa-universal-access"></i></div>
+                        <h3>Lighthouse & A11y</h3>
+                        <p>El agente ejecuta análisis automatizados de accesibilidad en el navegador y refactoriza el código erróneo de forma autónoma.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-bug-slash"></i></div>
+                        <h3>Runtime Sync</h3>
+                        <p>Sincronización total con la consola activa para interpretar errores e inyectar fixes en caliente sobre el editor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Section Web MCP -->
+        <div class="slide section-slide" id="slide-11">
+            <div class="slide-content">
+                <h2>Web MCP</h2>
+                <hr>
+                <p>Haciendo nuestras webs listas para la interacción segura y estructurada con agentes autónomos.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Agent-Ready Application -->
+        <div class="slide" id="slide-12">
+            <div class="slide-content">
+                <h2 class="slide-title">La Web "Agent-Ready"</h2>
+                <div class="two-column">
+                    <div>
+                        <p>Pasamos del scraping caótico (IAs tomando capturas de pantalla) a un **intercambio semántico estructurado** y seguro en el cliente:</p>
+                        <ul class="bullet-list green">
+                            <li><strong>Integridad de datos:</strong> La IA interactúa con firmas de funciones claras, no con adivinación del DOM.</li>
+                            <li><strong>API Nativa:</strong> Exponemos capacidades de negocio directamente a los asistentes de navegación de los usuarios.</li>
+                            <li><strong>Preservación de sesión:</strong> El agente interactúa dentro del sandbox del usuario usando cookies y sesión activa.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-green);">
+                        <i class="fa-solid fa-robot" style="color: var(--accent-green); filter: drop-shadow(0 0 15px rgba(158, 206, 106, 0.4));"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">Las páginas web ya no solo se diseñan para humanos, ahora también exponen contratos para agentes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Web MCP Implementaciones -->
+        <div class="slide" id="slide-13">
+            <div class="slide-content">
+                <h2 class="slide-title">Implementando Web MCP en tu App</h2>
+                <div class="two-column" style="align-items: start;">
+                    <div>
+                        <h3 style="color: var(--accent-green); margin-bottom: 0.5rem;"><i class="fa-solid fa-tags"></i> Enfoque Declarativo</h3>
+                        <p style="font-size: 1.05rem;">Marcado HTML estándar para que los agentes auto-completen o realicen consultas básicas.</p>
+                        <div class="code-container">
+                            <span class="code-comment">&lt;!-- Atributo nativo para formularios --&gt;</span><br>
+                            &lt;<span class="code-keyword">form</span> <span class="code-function">webmcp</span> action=<span class="code-string">"/comprar"</span>&gt;<br>
+                            &nbsp;&nbsp;&lt;<span class="code-keyword">input</span> name=<span class="code-string">"item"</span> type=<span class="code-string">"text"</span> /&gt;<br>
+                            &lt;/<span class="code-keyword">form</span>&gt;
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-blue); margin-bottom: 0.5rem;"><i class="fa-solid fa-gears"></i> Enfoque Imperativo</h3>
+                        <p style="font-size: 1.05rem;">Registra funciones avanzadas de JavaScript estructuradas con schemas JSON.</p>
+                        <div class="code-container">
+                            <span class="code-keyword">navigator</span>.<span class="code-keyword">modelContext</span>.<span class="code-function">provideContext</span>({<br>
+                            &nbsp;&nbsp;tools: [{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;name: <span class="code-string">"get_order_status"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;description: <span class="code-string">"Obtiene tracking en vivo"</span><br>
+                            &nbsp;&nbsp;}]<br>
+                            });
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Seguridad y Privacidad -->
+        <div class="slide" id="slide-14">
+            <div class="slide-content">
+                <h2 class="slide-title">Seguridad y Consenso de Usuario</h2>
+                <div class="two-column">
+                    <div class="image-showcase" style="border-color: var(--accent-purple);">
+                        <i class="fa-solid fa-shield-halved" style="color: var(--accent-purple); filter: drop-shadow(0 0 15px rgba(187, 154, 243, 0.4));"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">El navegador actúa como una capa blindada de control para el usuario.</p>
+                    </div>
+                    <div>
+                        <p>Las llamadas automáticas no implican acceso descontrolado:</p>
+                        <ul class="bullet-list">
+                            <li><strong>Puerta de Permisos:</strong> Cualquier acción asíncrona iniciada por la IA requiere la confirmación visual explícita del usuario.</li>
+                            <li><strong>Sandbox Estricto:</strong> Web MCP opera bajo las mismas restricciones del origen (Same-Origin Policy y CORS).</li>
+                            <li><strong>Validación de Esquema:</strong> Las entradas y salidas se formatean con validación estricta para mitigar inyecciones maliciosas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: La Demo (Demo) -->
+        <div class="slide section-slide" id="slide-15">
+            <div class="slide-content">
+                <h2>Demo en Vivo: HyperCart Lab</h2>
+                <hr>
+                <p>Diagnóstico autónomo con Chrome DevTools MCP y refactorización inteligente en hypercart-lab.vercel.app.</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Flujo de la Demo: Diagnóstico Autónomo -->
+        <div class="slide" id="slide-16">
+            <div class="slide-content">
+                <h2 class="slide-title">Paso 1: Diagnóstico en HyperCart Lab</h2>
+                <div class="two-column">
+                    <div class="bullet-list">
+                        <ul class="bullet-list">
+                            <li><strong>El Escenario:</strong> Una tienda e-commerce real con modo depuración activo: <code>hypercart-lab.vercel.app/?debug=1</code>.</li>
+                            <li><strong>Inyección de Fallas:</strong> Problemas de renderizado, prioridad de fetch rota (Priority Fetch), ausencia de pre-carga de imágenes de héroe (Preload Images) y lazy loading desconfigurado.</li>
+                            <li><strong>Instrucción a la IA:</strong> Solicitamos a la IA usando Chrome DevTools MCP: <em>"Inspecciona la UI, toma una traza de performance e identifica qué degrada el LCP y el INP de HyperCart"</em>.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-pink);">
+                        <i class="fa-solid fa-cart-shopping" style="color: var(--accent-pink); font-size: 5rem;"></i>
+                        <p style="text-align: center; font-size: 1.1rem;">La IA detecta cuellos de botella reales en la pestaña activa de HyperCart.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Aplicación del Fix -->
+        <div class="slide" id="slide-17">
+            <div class="slide-content">
+                <h2 class="slide-title">Paso 2: Fix de Rendimiento y Web MCP</h2>
+                <div class="two-column">
+                    <div>
+                        <p>La IA corrige dinámicamente el rendimiento y expone la aplicación como "Agent-Ready" para los asistentes de compra:</p>
+                        <ul class="bullet-list green">
+                            <li><strong>Fix Técnico:</strong> Corrige el lazy loading de imágenes críticas y restaura el preload de recursos prioritarios.</li>
+                            <li><strong>Integración Semántica:</strong> Registra la herramienta imperativa <code>get_active_cart</code> para permitir que la IA del usuario consulte la cesta de forma directa sin tocar la interfaz visual.</li>
+                        </ul>
+                    </div>
+                    <div class="code-container">
+                        <span class="code-comment">// Registrando contexto nativo en HyperCart:</span><br>
+                        <span class="code-keyword">navigator</span>.<span class="code-keyword">modelContext</span>.<span class="code-function">provideContext</span>({<br>
+                        &nbsp;&nbsp;tools: [{<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;name: <span class="code-string">"get_active_cart"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;execute: <span class="code-keyword">async</span> () => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> cart.getItems();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}]<br>
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Chrome DevTools MCP: Costos -->
+        <div class="slide" id="slide-18">
+            <div class="slide-content">
+                <h2 class="slide-title">Chrome DevTools MCP: ¿Quién paga?</h2>
+                <div class="two-column">
+                    <div>
+                        <p><strong>El costo de "ver" el navegador activamente:</strong></p>
+                        <ul class="bullet-list pink">
+                            <li><strong>El Cobro de Tokens:</strong> El protocolo y el servidor MCP son libres, pero la factura de tokens se carga a tu <strong>proveedor de API de IA</strong> (Anthropic, OpenAI, Gemini Cloud).</li>
+                            <li><strong>Trazas Pesadas:</strong> Enviar una traza completa de telemetría de rendimiento de DevTools puede inyectar **más de 25,000 tokens** en una sola consulta.</li>
+                            <li><strong>Lectura del DOM:</strong> Analizar repetidamente el árbol de nodos de HyperCart Lab consume ventana de contexto de manera activa.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-pink);">
+                        <i class="fa-solid fa-receipt"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">La factura de tokens pertenece a la suscripción o clave API del desarrollador, no a Chrome.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: WebMCP: Consumo Inteligente -->
+        <div class="slide" id="slide-19">
+            <div class="slide-content">
+                <h2 class="slide-title">WebMCP: Economía del Contexto</h2>
+                <div class="two-column">
+                    <div>
+                        <p><strong>Eficiencia en producción del lado del usuario:</strong></p>
+                        <ul class="bullet-list green">
+                            <li><strong>Ahorro Semántico:</strong> WebMCP envía esquemas JSON estructurados y ultra-ligeros en lugar de capturas de pantalla pesadas u hojas de estilo redundantes.</li>
+                            <li><strong>Menos Alucinación:</strong> Al contar con firmas de funciones claras, el modelo gasta menos tokens "razonando" qué hace la interfaz de usuario.</li>
+                            <li><strong>Gratis con Gemini Nano:</strong> Si el asistente del usuario interactúa con la web usando el modelo <strong>on-device</strong> nativo de Chrome, el consumo de WebMCP es local y a <strong>Costo Cero</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-green);">
+                        <i class="fa-solid fa-bolt-lightning" style="color: var(--accent-green);"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">Datos estructurados = Menos ruido semántico = Menos tokens. La web "Agent-Ready" es la más económica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Eficiencia de Chrome DevTools MCP -->
+        <div class="slide" id="slide-20">
+            <div class="slide-content">
+                <h2 class="slide-title">Eficiencia y Buenas Prácticas</h2>
+                <div class="two-column">
+                    <div class="chart-box">
+                        <div class="chart-row">
+                            <div class="chart-label">Debugging Manual</div>
+                            <div class="chart-track">
+                                <div class="chart-bar" style="width: 100%; background: var(--accent-pink);">100% de tiempo</div>
+                            </div>
+                        </div>
+                        <div class="chart-row">
+                            <div class="chart-label">IA Sin Contexto (Prompt)</div>
+                            <div class="chart-track">
+                                <div class="chart-bar" style="width: 75%; background: var(--accent-purple);">75% de tiempo</div>
+                            </div>
+                        </div>
+                        <div class="chart-row">
+                            <div class="chart-label">IA + Chrome DevTools MCP</div>
+                            <div class="chart-track">
+                                <div class="chart-bar" style="width: 30%; background: var(--accent-green);">30% de tiempo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bullet-list" style="margin-top: 1rem;">
+                        <h3>Buenas Prácticas</h3>
+                        <ul>
+                            <li><strong>Instancias Limpias:</strong> Usa siempre <code>--user-data-dir</code> para aislar tu información personal.</li>
+                            <li><strong>Validación estricta:</strong> Sanitiza todos los esquemas expuestos a Web MCP.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: El Roadmap -->
+        <div class="slide" id="slide-21">
+            <div class="slide-content">
+                <h2 class="slide-title">El Futuro de la Web "Agent-Ready"</h2>
+                <div class="two-column">
+                    <div>
+                        <p>Web MCP define la transición de una web visual a una web interoperable:</p>
+                        <ul class="bullet-list">
+                            <li><strong>Estándar W3C:</strong> Adopción del protocolo de contexto nativo entre diferentes marcas de navegadores.</li>
+                            <li><strong>Desaparición del Scraping:</strong> Interacciones más limpias, eficientes y seguras para los agentes de los usuarios.</li>
+                            <li><strong>Tráfico de Agentes:</strong> Las aplicaciones web que faciliten contextos rápidos serán preferidas por motores de búsqueda de IA.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase">
+                        <i class="fa-solid fa-map-location-dot" style="color: var(--accent-purple);"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">Evolucionar de un internet enfocado puramente en renderizado visual a un internet de intercambio de contextos de servicio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Q&A y Enlaces -->
+        <div class="slide-cover slide" id="slide-22">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center;">
+                <h2 style="font-size: 4rem; color: var(--accent-blue); margin-bottom: 1.5rem;">¿Preguntas?</h2>
+                <p style="font-size: 1.4rem;">¡Muchas gracias por acompañarme hoy!</p>
+                <div style="font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-size: 1.2rem; margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                    <div><i class="fa-solid fa-laptop-code"></i> Demo activa: hypercart-lab.vercel.app</div>
+                    <div><i class="fa-solid fa-book-open"></i> developer.chrome.com/docs/ai/webmcp</div>
+                    <div style="color: var(--text-secondary);"><i class="fa-brands fa-github"></i> github.com/star-speaker-web-mcp</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BARRA DE CONTROL DE PRESENTACIÓN -->
+    <div class="presentation-footer">
+        <!-- Barra de progreso superior de carga -->
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="footer-branding">
+            Web MCP <span>& Debugging Workshop</span>
+        </div>
+
+        <div class="footer-controls">
+            <button class="control-btn" id="prev-btn" title="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="slide-counter" id="slide-indicator">1 / 22</div>
+            <button class="control-btn" id="next-btn" title="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- CONTROLADOR JAVASCRIPT DE PRESENTACIÓN -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideIndicator = document.getElementById('slide-indicator');
+        const progressFill = document.getElementById('progress-fill');
+        const speakerPhoto = document.getElementById('speaker-photo');
+        const fallbackAvatar = document.getElementById('fallback-avatar');
+
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length;
+
+        // Manejo de fallback de imagen de perfil
+        if (speakerPhoto) {
+            speakerPhoto.addEventListener('error', function() {
+                this.style.display = 'none';
+                if (fallbackAvatar) {
+                    fallbackAvatar.style.display = 'flex';
+                }
+            });
+        }
+
+        // Función para actualizar el estado visual de las diapositivas
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if (index === currentSlideIndex) {
+                    slide.classList.add('active');
+                    slide.scrollTop = 0; // Auto-reset de scroll al activar la diapositiva
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Actualizar número de diapositiva
+            slideIndicator.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+
+            // Actualizar porcentaje de barra de progreso
+            const progressPercent = ((currentSlideIndex + 1) / totalSlides) * 100;
+            progressFill.style.width = `${progressPercent}%`;
+        }
+
+        // Navegación
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateSlides();
+            }
+        }
+
+        // Diapositiva anterior
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSlides();
+            }
+        }
+
+        // Controladores de eventos de Botones
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Controladores de eventos de Teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Soporte para gestos táctiles (Swipe) para dispositivos móviles
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const threshold = 50; // Umbral de píxeles para el swipe
+            if (touchStartX - touchEndX > threshold) {
+                // Swipe hacia la izquierda -> Siguiente diapositiva
+                nextSlide();
+            } else if (touchEndX - touchStartX > threshold) {
+                // Swipe hacia la derecha -> Diapositiva anterior
+                prevSlide();
+            }
+        }
+
+        // Inicializar barra de progreso al cargar
+        updateSlides();
+    </script>
+</body>
+</html>
