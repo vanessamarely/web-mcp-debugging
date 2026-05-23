@@ -253,6 +253,46 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* Redes Sociales en el Perfil */
+        .profile-socials {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .social-link i {
+            font-size: 1.2rem;
+        }
+
+        .social-link.instagram:hover {
+            color: var(--accent-pink);
+        }
+
+        .social-link.youtube:hover {
+            color: #ff0000;
+        }
+
+        .social-link.github:hover {
+            color: #ffffff;
+        }
+
         /* Dos Columnas Clásicas */
         .two-column {
             display: grid;
@@ -448,6 +488,163 @@
             transition: width 1s ease-in-out;
         }
 
+        /* MOCKUPS DE DEVTOOLS ( Tokyo Night Console ) */
+        .devtools-mockup {
+            background-color: #1a1b26;
+            border: 1px solid #383e5a;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .devtools-header {
+            background-color: #24283b;
+            padding: 8px 12px;
+            border-bottom: 1px solid #383e5a;
+            display: flex;
+            gap: 15px;
+            color: #7982a9;
+            font-size: 0.8rem;
+        }
+
+        .devtools-tab {
+            cursor: pointer;
+        }
+
+        .devtools-tab.active {
+            color: #7aa2f7;
+            border-bottom: 2px solid #7aa2f7;
+            padding-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .devtools-content {
+            padding: 12px;
+            min-height: 140px;
+        }
+
+        .console-log {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .console-error {
+            color: #f7768e;
+            background-color: rgba(247, 118, 142, 0.08);
+            border-left: 3px solid #f7768e;
+            padding: 4px 8px;
+        }
+
+        .ai-spark-btn {
+            background: linear-gradient(135deg, #7aa2f7 0%, #bb9af3 100%);
+            color: #0d1117;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ai-insight-box {
+            margin-top: 12px;
+            background-color: rgba(122, 162, 247, 0.08);
+            border: 1px dashed #7aa2f7;
+            border-radius: 6px;
+            padding: 10px;
+            color: #a9b1d6;
+        }
+
+        /* 5.5 DISEÑO DASHBOARD DIAPOSITIVA 20 (Tokyo Night Dashboard Theme) */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .metric-card h3 {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .metric-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .badge-red { background: rgba(247, 118, 142, 0.15); color: var(--accent-pink); }
+        .badge-yellow { background: rgba(255, 158, 100, 0.15); color: #ff9e64; }
+        .badge-green { background: rgba(158, 206, 106, 0.15); color: var(--accent-green); box-shadow: 0 0 10px rgba(158, 206, 106, 0.1); }
+
+        .highlights-box {
+            background: linear-gradient(135deg, rgba(122, 162, 247, 0.1) 0%, rgba(187, 154, 243, 0.1) 100%);
+            border: 1px solid rgba(122, 162, 247, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-stat {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-shadow: 0 0 15px rgba(158, 206, 106, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
         /* 6. BARRA DE CONTROL DE PRESENTACIÓN (FOOTER) */
         .presentation-footer {
             height: 60px;
@@ -465,9 +662,6 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .footer-branding span {
@@ -662,120 +856,154 @@
                         </div>
                     </div>
                     <div class="profile-bio">
-                        <h3>Software Engineer</h3>
-                        <div class="subtitle">MSc in Engineering • Software Specialist</div>
+                        <h3>Vanessa Marely</h3>
+                        <div class="subtitle">Software Engineer & MSc | GDE | GitHub Star</div>
                         <ul class="bullet-list">
-                            <li><strong>GDE in Angular & Web Technologies</strong></li>
-                            <li><strong>GitHub Star</strong></li>
-                            <li><strong>Creadora de contenido</strong></li>
+                            <li><strong>GDE in Angular & Web Technologies</strong> (Google Expert)</li>
+                            <li><strong>GitHub Star</strong> • Miembro activa del open source global</li>
+                            <li><strong>Especialista Web:</strong> Enfoque en rendimiento, arquitectura y accesibilidad</li>
                         </ul>
+                        <div class="profile-socials">
+                            <a href="https://instagram.com/vanessamarelycode" target="_blank" class="social-link instagram">
+                                <i class="fa-brands fa-instagram"></i> @vanessamarelycode
+                            </a>
+                            <a href="https://youtube.com/@vanessamarely" target="_blank" class="social-link youtube">
+                                <i class="fa-brands fa-youtube"></i> vanessamarely
+                            </a>
+                            <a href="https://github.com/vanessamarely" target="_blank" class="social-link github">
+                                <i class="fa-brands fa-github"></i> vanessamarely
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: El Problema fundamental -->
+        <!-- Slide 3: El Problema fundamental (Matizado) -->
         <div class="slide" id="slide-3">
             <div class="slide-content">
-                <h2 class="slide-title">El Problema</h2>
+                <h2 class="slide-title">El Problema: ¿IA Ciega en el Navegador?</h2>
                 <div class="two-column">
                     <div>
-                        <p>A pesar de su potencia, los asistentes de código de Inteligencia Artificial actuales programan "aislados":</p>
+                        <p>Los entornos de ejecución ya no son totalmente estáticos ni la IA en DevTools está completamente ausente:</p>
                         <ul class="bullet-list">
-                            <li><strong>Desconexión del DOM:</strong> No pueden comprobar si un elemento se renderizó, si es accesible o si está oculto.</li>
-                            <li><strong>Aislamiento de la consola:</strong> Ignoran de forma nativa los errores de ejecución que ocurren en el cliente.</li>
-                            <li><strong>Ausencia de métricas de red:</strong> No tienen idea de si los fetiches de red fallan o si hay latencia.</li>
-                            <li><strong>Generación a ciegas:</strong> Producen sugerencias de código perfectas que no se sincronizan con tu navegador activo.</li>
+                            <li><strong>IA Confinada:</strong> El navegador ha comenzado a volverse más agéntico. Chrome DevTools ya cuenta con paneles asistidos por IA.</li>
+                            <li><strong>Comprensión Local:</strong> Herramientas nativas explican excepciones de consola o analizan estilos visuales.</li>
+                            <li><strong>Sin embargo... Sigue Aislada:</strong> Estas capacidades viven encerradas en el panel. No se comunican con tu IDE, no editan tu código de origen ni analizan tu arquitectura local.</li>
                         </ul>
                     </div>
-                    <div class="image-showcase">
-                        <i class="fa-regular fa-eye-slash"></i>
-                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">La IA programa basándose en hipótesis de texto, no en la ejecución en tiempo real.</p>
+                    <div class="devtools-mockup">
+                        <div class="devtools-header">
+                            <div class="devtools-tab active">Console</div>
+                            <div class="devtools-tab">Sources</div>
+                            <div class="devtools-tab">Network</div>
+                        </div>
+                        <div class="devtools-content">
+                            <div class="console-log console-error">
+                                ❌ Uncaught TypeError: Cannot read properties of undefined (reading 'priority') at hypercart.js:42
+                            </div>
+                            <button class="ai-spark-btn">
+                                <i class="fa-solid fa-wand-magic-spark"></i> Entender este error con IA
+                            </button>
+                            <div class="ai-insight-box">
+                                <strong style="color: #7aa2f7;">DevTools AI Insight:</strong> El objeto 'priority' falló al cargarse en la línea 42 debido a que el fetch de inicialización no devolvió datos estructurados a tiempo.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: ¿Qué es MCP? -->
+        <!-- Slide 4: Debugging Tradicional y DevTools con IA -->
         <div class="slide" id="slide-4">
             <div class="slide-content">
-                <h2 class="slide-title">¿Qué es Model Context Protocol?</h2>
-                <div class="grid-cards">
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-network-wired"></i></div>
-                        <h3>El Conector</h3>
-                        <p>Un estándar de comunicación unificado que crea una tubería directa entre las IAs y los entornos de ejecución.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--accent-purple);"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-                        <h3>Ecosistema</h3>
-                        <p>Separa los clientes de IA de los proveedores de herramientas, permitiendo integraciones universales y reutilizables.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--accent-pink);"><i class="fa-solid fa-database"></i></div>
-                        <h3>Contexto</h3>
-                        <p>Alimenta al modelo de forma dinámica con recursos, bases de datos, código e información interactiva.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5: Section Debugging Tradicional -->
-        <div class="slide section-slide" id="slide-5">
-            <div class="slide-content">
-                <h2>Debugging Tradicional</h2>
-                <hr>
-                <p>Cómo hemos depurado aplicaciones web hasta hoy y las limitaciones del flujo humano.</p>
-            </div>
-        </div>
-
-        <!-- Slide 6: El Límite del Debugging Tradicional -->
-        <div class="slide" id="slide-6">
-            <div class="slide-content">
-                <h2 class="slide-title">Debugging Tradicional: El Límite Humano</h2>
+                <h2 class="slide-title">Debugging Moderno y sus Límites</h2>
                 <div class="two-column">
                     <div>
-                        <p>El flujo diario de desarrollo está fragmentado por constantes interrupciones de contexto:</p>
+                        <p>Incluso con los avances agénticos y los paneles asistidos por IA actuales, la depuración sigue teniendo fricciones severas:</p>
                         <ul class="bullet-list pink">
-                            <li><strong>Análisis Manual de Trazas:</strong> Grabar el performance, buscar el hilo principal bloqueado e interpretar gráficos complejos de flama.</li>
-                            <li><strong>Excepciones de Runtime:</strong> Leer errores minificados en consola y rastrear manualmente el archivo original.</li>
-                            <li><strong>Auditoría Visual:</strong> Inspeccionar el DOM para verificar la accesibilidad (A11y) y contrastes de color uno a uno.</li>
-                            <li><strong>Context Switching constante:</strong> El tiempo se pierde saltando infinitamente entre el navegador, DevTools y el editor de código.</li>
+                            <li><strong>Context Switching Permanente:</strong> Tienes que copiar el error de consola manualmente o usar el chat del navegador para luego transferirlo a tu IDE.</li>
+                            <li><strong>Silencio de Red y Rendimiento:</strong> Los diagnósticos de red e Interaction to Next Paint (INP) requieren un análisis humano exhaustivo para unirlos con el código real.</li>
+                            <li><strong>Incapacidad de Acción Directa:</strong> La IA nativa de DevTools puede diagnosticar, pero no puede aplicar los cambios estructurales en tu codebase.</li>
                         </ul>
                     </div>
-                    <div class="image-showcase" style="border-color: var(--accent-pink);">
-                        <i class="fa-solid fa-hourglass-half"></i>
-                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">El 50% del tiempo de desarrollo se consume reproduciendo y analizando errores de forma manual.</p>
+                    <div class="devtools-mockup">
+                        <div class="devtools-header">
+                            <div class="devtools-tab">Console</div>
+                            <div class="devtools-tab">Sources</div>
+                            <div class="devtools-tab active">Performance Insights</div>
+                        </div>
+                        <div class="devtools-content">
+                            <p style="color: #bb9af3; font-weight: bold; margin-bottom: 8px;">📊 Layout Shift / INP Culprit Detected</p>
+                            <p style="font-size: 0.8rem; color: #a9b1d6; margin-bottom: 12px;">Bloqueo del hilo principal de 420ms durante el renderizado de imágenes de HyperCart sin preload.</p>
+                            <div class="code-container" style="font-size: 0.8rem; padding: 10px; margin: 0;">
+                                <span class="code-comment">// Código en disco que la IA nativa no puede tocar:</span><br>
+                                &lt;img <span class="code-keyword">lazy</span>="true" src="hero.png"&gt;
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 7: Section Debugging con Chrome DevTools MCP -->
+        <!-- Slide 5: El Eslabón Perdido -->
+        <div class="slide section-slide" id="slide-5">
+            <div class="slide-content">
+                <h2>El Eslabón Perdido</h2>
+                <hr>
+                <p>¿Y si pudiéramos unificar la telemetría del navegador y la capacidad de cambio de tu IDE mediante un único estándar?</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: ¿Qué es Model Context Protocol? -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <h2 class="slide-title">¿Qué es Model Context Protocol (MCP)?</h2>
+                <div class="grid-cards">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-circle-nodes"></i></div>
+                        <h3>Un Estándar Abierto</h3>
+                        <p>Creado para unificar la forma en que los LLMs leen datos del sistema y ejecutan herramientas externas de manera estructurada.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-purple);"><i class="fa-solid fa-arrows-left-right"></i></div>
+                        <h3>Cliente - Servidor</h3>
+                        <p>El cliente de IA (como Cursor o Claude Desktop) consume los datos que los servidores MCP locales o remotos exponen.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-pink);"><i class="fa-solid fa-bolt"></i></div>
+                        <h3>Herramientas Vivas</h3>
+                        <p>Ofrece un protocolo unificado para declarar funciones ("Tools") que la IA invoca bajo demanda con un esquema JSON.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Chrome DevTools MCP: La Evolución -->
         <div class="slide section-slide" id="slide-7">
             <div class="slide-content">
                 <h2>Chrome DevTools MCP</h2>
                 <hr>
-                <p>Dándole ojos cognitivos a la IA dentro del navegador activo del desarrollador.</p>
+                <p>Liberando el poder de CDP (Chrome DevTools Protocol) para tu editor de código preferido.</p>
             </div>
         </div>
 
-        <!-- Slide 8: Chrome DevTools MCP Server -->
+        <!-- Slide 8: El Copiloto con Ojos Reales -->
         <div class="slide" id="slide-8">
             <div class="slide-content">
-                <h2 class="slide-title">El Copiloto con Ojos</h2>
+                <h2 class="slide-title">El Servidor Chrome DevTools MCP</h2>
                 <div class="two-column">
                     <div>
-                        <p>El servidor oficial de Google permite a tu IDE o interfaz conversacional operar sobre una instancia real del navegador:</p>
+                        <p>Este servidor actúa como el puente definitivo que permite a los LLMs convertirse en operadores de tu navegador:</p>
                         <ul class="bullet-list">
-                            <li><strong>Conexión local bidireccional:</strong> Conecta entornos como Cursor o Claude Desktop al puerto de depuración activa.</li>
-                            <li><strong>Acceso completo a CDP:</strong> El modelo puede interactuar de forma segura con el *Chrome DevTools Protocol* en tiempo real.</li>
-                            <li><strong>Lectura proactiva de logs:</strong> La IA detecta al instante excepciones de JS no controladas y fallas en llamadas REST/GraphQL.</li>
+                            <li><strong>Conexión Local Directa:</strong> Une tu IDE inteligente con la pestaña de desarrollo activa en Chrome.</li>
+                            <li><strong>Acceso Completo a CDP:</strong> El modelo de IA externo puede invocar métodos del protocolo Chrome DevTools.</li>
+                            <li><strong>Interacción Cognitiva:</strong> Lee consola, inspecciona la UI, mide el rendimiento y genera soluciones en disco de forma instantánea.</li>
                         </ul>
                     </div>
                     <div class="image-showcase" style="border-color: var(--accent-blue);">
                         <i class="fa-brands fa-chrome" style="color: var(--accent-blue); filter: drop-shadow(0 0 15px rgba(122, 162, 247, 0.4));"></i>
-                        <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; text-align: center;">npx chrome-devtools-mcp</p>
+                        <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; text-align: center; margin-top: 10px;">npx chrome-devtools-mcp</p>
                     </div>
                 </div>
             </div>
@@ -802,8 +1030,8 @@
                     <div class="bullet-list">
                         <h3>¿Por qué depurar aislados?</h3>
                         <ul style="margin-top: 1rem;">
-                            <li><strong>Privacidad de credenciales:</strong> Protege tus cookies de producción, extensiones y contraseñas de accesos del modelo de IA.</li>
-                            <li><strong>Entorno determinista:</strong> Evita interferencias de extensiones de terceros en el análisis de trazas de performance.</li>
+                            <li><strong>Privacidad de credenciales:</strong> Evita exponer cookies de producción, extensiones personales o contraseñas al agente de IA.</li>
+                            <li><strong>Entorno determinista:</strong> Reduce el ruido de extensiones en las métricas de renderizado y trazas de performance.</li>
                         </ul>
                     </div>
                 </div>
@@ -817,107 +1045,25 @@
                 <div class="grid-cards">
                     <div class="card">
                         <div class="card-icon" style="color: var(--accent-pink);"><i class="fa-solid fa-chart-line"></i></div>
-                        <h3>Performance Audits</h3>
-                        <p>La IA graba trazas locales directamente, detectando cuellos de botella de renderizado e Interaction to Next Paint (INP).</p>
+                        <h3>Performance Tracing</h3>
+                        <p>La IA graba trazas locales directamente, identificando cuellos de botella de renderizado de forma autónoma.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon" style="color: var(--accent-green);"><i class="fa-solid fa-universal-access"></i></div>
                         <h3>Lighthouse & A11y</h3>
-                        <p>El agente ejecuta análisis automatizados de accesibilidad en el navegador y refactoriza el código erróneo de forma autónoma.</p>
+                        <p>El agente ejecuta análisis automatizados de accesibilidad en el navegador y refactoriza el código erróneo en tu editor.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-bug-slash"></i></div>
                         <h3>Runtime Sync</h3>
-                        <p>Sincronización total con la consola activa para interpretar errores e inyectar fixes en caliente sobre el editor.</p>
+                        <p>Sincronización total con la consola activa para interpretar errores e inyectar fixes en caliente sobre el disco.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11: Section Web MCP -->
+        <!-- Slide 11: La Demo (Demo) -->
         <div class="slide section-slide" id="slide-11">
-            <div class="slide-content">
-                <h2>Web MCP</h2>
-                <hr>
-                <p>Haciendo nuestras webs listas para la interacción segura y estructurada con agentes autónomos.</p>
-            </div>
-        </div>
-
-        <!-- Slide 12: Agent-Ready Application -->
-        <div class="slide" id="slide-12">
-            <div class="slide-content">
-                <h2 class="slide-title">La Web "Agent-Ready"</h2>
-                <div class="two-column">
-                    <div>
-                        <p>Pasamos del scraping caótico (IAs tomando capturas de pantalla) a un **intercambio semántico estructurado** y seguro en el cliente:</p>
-                        <ul class="bullet-list green">
-                            <li><strong>Integridad de datos:</strong> La IA interactúa con firmas de funciones claras, no con adivinación del DOM.</li>
-                            <li><strong>API Nativa:</strong> Exponemos capacidades de negocio directamente a los asistentes de navegación de los usuarios.</li>
-                            <li><strong>Preservación de sesión:</strong> El agente interactúa dentro del sandbox del usuario usando cookies y sesión activa.</li>
-                        </ul>
-                    </div>
-                    <div class="image-showcase" style="border-color: var(--accent-green);">
-                        <i class="fa-solid fa-robot" style="color: var(--accent-green); filter: drop-shadow(0 0 15px rgba(158, 206, 106, 0.4));"></i>
-                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">Las páginas web ya no solo se diseñan para humanos, ahora también exponen contratos para agentes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 13: Web MCP Implementaciones -->
-        <div class="slide" id="slide-13">
-            <div class="slide-content">
-                <h2 class="slide-title">Implementando Web MCP en tu App</h2>
-                <div class="two-column" style="align-items: start;">
-                    <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 0.5rem;"><i class="fa-solid fa-tags"></i> Enfoque Declarativo</h3>
-                        <p style="font-size: 1.05rem;">Marcado HTML estándar para que los agentes auto-completen o realicen consultas básicas.</p>
-                        <div class="code-container">
-                            <span class="code-comment">&lt;!-- Atributo nativo para formularios --&gt;</span><br>
-                            &lt;<span class="code-keyword">form</span> <span class="code-function">webmcp</span> action=<span class="code-string">"/comprar"</span>&gt;<br>
-                            &nbsp;&nbsp;&lt;<span class="code-keyword">input</span> name=<span class="code-string">"item"</span> type=<span class="code-string">"text"</span> /&gt;<br>
-                            &lt;/<span class="code-keyword">form</span>&gt;
-                        </div>
-                    </div>
-                    <div>
-                        <h3 style="color: var(--accent-blue); margin-bottom: 0.5rem;"><i class="fa-solid fa-gears"></i> Enfoque Imperativo</h3>
-                        <p style="font-size: 1.05rem;">Registra funciones avanzadas de JavaScript estructuradas con schemas JSON.</p>
-                        <div class="code-container">
-                            <span class="code-keyword">navigator</span>.<span class="code-keyword">modelContext</span>.<span class="code-function">provideContext</span>({<br>
-                            &nbsp;&nbsp;tools: [{<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;name: <span class="code-string">"get_order_status"</span>,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;description: <span class="code-string">"Obtiene tracking en vivo"</span><br>
-                            &nbsp;&nbsp;}]<br>
-                            });
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14: Seguridad y Privacidad -->
-        <div class="slide" id="slide-14">
-            <div class="slide-content">
-                <h2 class="slide-title">Seguridad y Consenso de Usuario</h2>
-                <div class="two-column">
-                    <div class="image-showcase" style="border-color: var(--accent-purple);">
-                        <i class="fa-solid fa-shield-halved" style="color: var(--accent-purple); filter: drop-shadow(0 0 15px rgba(187, 154, 243, 0.4));"></i>
-                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">El navegador actúa como una capa blindada de control para el usuario.</p>
-                    </div>
-                    <div>
-                        <p>Las llamadas automáticas no implican acceso descontrolado:</p>
-                        <ul class="bullet-list">
-                            <li><strong>Puerta de Permisos:</strong> Cualquier acción asíncrona iniciada por la IA requiere la confirmación visual explícita del usuario.</li>
-                            <li><strong>Sandbox Estricto:</strong> Web MCP opera bajo las mismas restricciones del origen (Same-Origin Policy y CORS).</li>
-                            <li><strong>Validación de Esquema:</strong> Las entradas y salidas se formatean con validación estricta para mitigar inyecciones maliciosas.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 15: La Demo (Demo) -->
-        <div class="slide section-slide" id="slide-15">
             <div class="slide-content">
                 <h2>Demo en Vivo: HyperCart Lab</h2>
                 <hr>
@@ -925,8 +1071,8 @@
             </div>
         </div>
 
-        <!-- Slide 16: Flujo de la Demo: Diagnóstico Autónomo -->
-        <div class="slide" id="slide-16">
+        <!-- Slide 12: Flujo de la Demo: Diagnóstico Autónomo -->
+        <div class="slide" id="slide-12">
             <div class="slide-content">
                 <h2 class="slide-title">Paso 1: Diagnóstico en HyperCart Lab</h2>
                 <div class="two-column">
@@ -945,35 +1091,28 @@
             </div>
         </div>
 
-        <!-- Slide 17: Aplicación del Fix -->
-        <div class="slide" id="slide-17">
+        <!-- Slide 13: Aplicación del Fix -->
+        <div class="slide" id="slide-13">
             <div class="slide-content">
-                <h2 class="slide-title">Paso 2: Fix de Rendimiento y Web MCP</h2>
+                <h2 class="slide-title">Paso 2: Fix de Rendimiento</h2>
                 <div class="two-column">
                     <div>
-                        <p>La IA corrige dinámicamente el rendimiento y expone la aplicación como "Agent-Ready" para los asistentes de compra:</p>
+                        <p>La IA corrige dinámicamente el rendimiento basándose en la telemetría recolectada:</p>
                         <ul class="bullet-list green">
-                            <li><strong>Fix Técnico:</strong> Corrige el lazy loading de imágenes críticas y restaura el preload de recursos prioritarios.</li>
-                            <li><strong>Integración Semántica:</strong> Registra la herramienta imperativa <code>get_active_cart</code> para permitir que la IA del usuario consulte la cesta de forma directa sin tocar la interfaz visual.</li>
+                            <li><strong>Corrección Técnica:</strong> Corrige el lazy loading de imágenes críticas y restaura el preload de recursos prioritarios.</li>
+                            <li><strong>Edición Directa:</strong> Reescribe y optimiza el archivo de tu codebase en caliente, validando de nuevo con otra traza limpia de DevTools MCP.</li>
                         </ul>
                     </div>
                     <div class="code-container">
-                        <span class="code-comment">// Registrando contexto nativo en HyperCart:</span><br>
-                        <span class="code-keyword">navigator</span>.<span class="code-keyword">modelContext</span>.<span class="code-function">provideContext</span>({<br>
-                        &nbsp;&nbsp;tools: [{<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;name: <span class="code-string">"get_active_cart"</span>,<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;execute: <span class="code-keyword">async</span> () => {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> cart.getItems();<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;}]<br>
-                        });
+                        <span class="code-comment">&lt;!-- Cambios aplicados en caliente por el agente en disco --&gt;</span><br>
+                        &lt;<span class="code-keyword">link</span> rel=<span class="code-string">"preload"</span> href=<span class="code-string">"hero.png"</span> as=<span class="code-string">"image"</span> fetchpriority=<span class="code-string">"high"</span>&gt;
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 18: Chrome DevTools MCP: Costos -->
-        <div class="slide" id="slide-18">
+        <!-- Slide 14: Chrome DevTools MCP: Costos -->
+        <div class="slide" id="slide-14">
             <div class="slide-content">
                 <h2 class="slide-title">Chrome DevTools MCP: ¿Quién paga?</h2>
                 <div class="two-column">
@@ -993,16 +1132,98 @@
             </div>
         </div>
 
+        <!-- Slide 15: Section Web MCP -->
+        <div class="slide section-slide" id="slide-15">
+            <div class="slide-content">
+                <h2>Web MCP</h2>
+                <hr>
+                <p>Pasando del flujo de desarrollo al ecosistema de producción de cara al usuario final.</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Agent-Ready Application -->
+        <div class="slide" id="slide-16">
+            <div class="slide-content">
+                <h2 class="slide-title">La Web "Agent-Ready"</h2>
+                <div class="two-column">
+                    <div>
+                        <p>Pasamos del scraping caótico (IAs tomando capturas de pantalla) a un **intercambio semántico estructurado** y seguro en el cliente:</p>
+                        <ul class="bullet-list green">
+                            <li><strong>Integridad de datos:</strong> La IA interactúa con firmas de funciones claras, no con adivinación del DOM.</li>
+                            <li><strong>API Nativa:</strong> Exponemos capacidades de negocio directamente a los asistentes de navegación de los usuarios.</li>
+                            <li><strong>Preservación de sesión:</strong> El agente interactúa dentro del sandbox del usuario usando cookies y sesión activa.</li>
+                        </ul>
+                    </div>
+                    <div class="image-showcase" style="border-color: var(--accent-green);">
+                        <i class="fa-solid fa-robot" style="color: var(--accent-green); filter: drop-shadow(0 0 15px rgba(158, 206, 106, 0.4));"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">Las páginas web ya no solo se diseñan para humanos, ahora también exponen contratos para agentes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Web MCP Implementaciones -->
+        <div class="slide" id="slide-17">
+            <div class="slide-content">
+                <h2 class="slide-title">Implementando Web MCP en tu App</h2>
+                <div class="two-column" style="align-items: start;">
+                    <div>
+                        <h3 style="color: var(--accent-green); margin-bottom: 0.5rem;"><i class="fa-solid fa-tags"></i> Enfoque Declarativo</h3>
+                        <p style="font-size: 1.05rem;">Marcado HTML estándar para que los agentes auto-completen o realicen consultas básicas.</p>
+                        <div class="code-container">
+                            <span class="code-comment">&lt;!-- Atributo nativo para formularios --&gt;</span><br>
+                            &lt;<span class="code-keyword">form</span> <span class="code-function">webmcp</span> action=<span class="code-string">"/comprar"</span>&gt;<br>
+                            &nbsp;&nbsp;&lt;<span class="code-keyword">input</span> name=<span class="code-string">"item"</span> type=<span class="code-string">"text"</span> /&gt;<br>
+                            &lt;/<span class="code-keyword">form</span>&gt;
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-blue); margin-bottom: 0.5rem;"><i class="fa-solid fa-gears"></i> Enfoque Imperativo</h3>
+                        <p style="font-size: 1.05rem;">Registra funciones avanzadas de JavaScript estructuradas con schemas JSON.</p>
+                        <div class="code-container">
+                            <span class="code-keyword">navigator</span>.<span class="code-keyword">modelContext</span>.<span class="code-function">provideContext</span>({<br>
+                            &nbsp;&nbsp;tools: [{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;name: <span class="code-string">"get_active_cart"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;description: <span class="code-string">"Obtiene tracking en vivo"</span><br>
+                            &nbsp;&nbsp;}]<br>
+                            });
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Seguridad y Privacidad -->
+        <div class="slide" id="slide-18">
+            <div class="slide-content">
+                <h2 class="slide-title">Seguridad y Consenso de Usuario</h2>
+                <div class="two-column">
+                    <div class="image-showcase" style="border-color: var(--accent-purple);">
+                        <i class="fa-solid fa-shield-halved" style="color: var(--accent-purple); filter: drop-shadow(0 0 15px rgba(187, 154, 243, 0.4));"></i>
+                        <p style="text-align: center; font-size: 1.1rem; max-width: 300px;">El navegador actúa como una capa blindada de control para el usuario.</p>
+                    </div>
+                    <div>
+                        <p>Las llamadas automáticas no implican acceso descontrolado:</p>
+                        <ul class="bullet-list">
+                            <li><strong>Puerta de Permisos:</strong> Cualquier acción asíncrona iniciada por la IA requiere la confirmación visual explícita del usuario.</li>
+                            <li><strong>Sandbox Estricto:</strong> Web MCP opera bajo las mismas restricciones del origen (Same-Origin Policy y CORS).</li>
+                            <li><strong>Validación de Esquema:</strong> Las entradas y salidas se formatean con validación estricta para mitigar inyecciones maliciosas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide 19: WebMCP: Consumo Inteligente -->
         <div class="slide" id="slide-19">
             <div class="slide-content">
                 <h2 class="slide-title">WebMCP: Economía del Contexto</h2>
                 <div class="two-column">
                     <div>
-                        <p><strong>Eficiencia en producción del lado del usuario:</strong></p>
+                        <p><strong>Eficiencia en producción del lado del usuario final:</strong></p>
                         <ul class="bullet-list green">
                             <li><strong>Ahorro Semántico:</strong> WebMCP envía esquemas JSON estructurados y ultra-ligeros en lugar de capturas de pantalla pesadas u hojas de estilo redundantes.</li>
-                            <li><strong>Menos Alucinación:</strong> Al contar con firmas de funciones claras, el modelo gasta menos tokens "razonando" qué hace la interfaz de usuario.</li>
+                            <li><strong>Menos Alucinación:</strong> Al contar con firmas de funciones claras, el modelo del usuario gasta menos tokens "razonando" qué hace la interfaz de usuario.</li>
                             <li><strong>Gratis con Gemini Nano:</strong> Si el asistente del usuario interactúa con la web usando el modelo <strong>on-device</strong> nativo de Chrome, el consumo de WebMCP es local y a <strong>Costo Cero</strong>.</li>
                         </ul>
                     </div>
@@ -1014,44 +1235,63 @@
             </div>
         </div>
 
-        <!-- Slide 20: Eficiencia de Chrome DevTools MCP -->
+        <!-- Slide 20: Eficiencia de Chrome DevTools MCP (Rediseñado como Dashboard de Alto Impacto) -->
         <div class="slide" id="slide-20">
             <div class="slide-content">
-                <h2 class="slide-title">Eficiencia y Buenas Prácticas</h2>
-                <div class="two-column">
-                    <div class="chart-box">
-                        <div class="chart-row">
-                            <div class="chart-label">Debugging Manual</div>
-                            <div class="chart-track">
-                                <div class="chart-bar" style="width: 100%; background: var(--accent-pink);">100% de tiempo</div>
-                            </div>
+                <h2 class="slide-title">Métricas de Impacto y Eficiencia</h2>
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <h3><i class="fa-solid fa-chart-bar"></i> Comparativa de Diagnóstico (Tiempo)</h3>
+                        
+                        <div class="metric-row">
+                            <span class="metric-label">Debugging Manual (DevTools)</span>
+                            <span class="metric-badge badge-red">25 Minutos</span>
                         </div>
-                        <div class="chart-row">
-                            <div class="chart-label">IA Sin Contexto (Prompt)</div>
-                            <div class="chart-track">
-                                <div class="chart-bar" style="width: 75%; background: var(--accent-purple);">75% de tiempo</div>
-                            </div>
+                        <p style="font-size: 0.9rem; margin-top: -8px; color: var(--text-muted);">Fricción máxima. Búsqueda y tracking manual de trazas de flama.</p>
+
+                        <div class="metric-row">
+                            <span class="metric-label">IA Tradicional (Chat/Prompt)</span>
+                            <span class="metric-badge badge-yellow">12 Minutos</span>
                         </div>
-                        <div class="chart-row">
-                            <div class="chart-label">IA + Chrome DevTools MCP</div>
-                            <div class="chart-track">
-                                <div class="chart-bar" style="width: 30%; background: var(--accent-green);">30% de tiempo</div>
-                            </div>
+                        <p style="font-size: 0.9rem; margin-top: -8px; color: var(--text-muted);">Copiar errores de consola, formatear logs, explicar al chat e IDE.</p>
+
+                        <div class="metric-row">
+                            <span class="metric-label">IA + Chrome DevTools MCP</span>
+                            <span class="metric-badge badge-green">2 Minutos</span>
                         </div>
+                        <p style="font-size: 0.9rem; margin-top: -8px; color: var(--text-muted);">Totalmente automatizado. El LLM lee el CDP en vivo y aplica el fix en caliente.</p>
                     </div>
-                    <div class="bullet-list" style="margin-top: 1rem;">
-                        <h3>Buenas Prácticas</h3>
-                        <ul>
-                            <li><strong>Instancias Limpias:</strong> Usa siempre <code>--user-data-dir</code> para aislar tu información personal.</li>
-                            <li><strong>Validación estricta:</strong> Sanitiza todos los esquemas expuestos a Web MCP.</li>
-                        </ul>
+
+                    <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                        <div class="metric-card">
+                            <h3><i class="fa-solid fa-shuffle"></i> Saltos de Contexto (Fricción)</h3>
+                            
+                            <div class="metric-row">
+                                <span class="metric-label">Debugging Manual</span>
+                                <span class="metric-badge badge-red">18 Veces</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">IA Tradicional (Chat)</span>
+                                <span class="metric-badge badge-yellow">8 Veces</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Chrome DevTools MCP</span>
+                                <span class="metric-badge badge-green">0 Veces</span>
+                            </div>
+                        </div>
+
+                        <div class="highlights-box">
+                            <div class="highlight-stat">92%</div>
+                            <p style="color: var(--text-primary); font-weight: 600; font-size: 1.1rem; margin-bottom: 0;">Reducción de Tiempo de Ciclo</p>
+                            <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--accent-blue);">Sincronización absoluta de IDE + Navegador</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 21: El Roadmap -->
-        <div class="slide" id="slide-21">
+        <div class="slide id-21" id="slide-21">
             <div class="slide-content">
                 <h2 class="slide-title">El Futuro de la Web "Agent-Ready"</h2>
                 <div class="two-column">
@@ -1079,7 +1319,7 @@
                 <div style="font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-size: 1.2rem; margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem;">
                     <div><i class="fa-solid fa-laptop-code"></i> Demo activa: hypercart-lab.vercel.app</div>
                     <div><i class="fa-solid fa-book-open"></i> developer.chrome.com/docs/ai/webmcp</div>
-                    <div style="color: var(--text-secondary);"><i class="fa-brands fa-github"></i> github.com/star-speaker-web-mcp</div>
+                    <div><i class="fa-brands fa-github"></i> github.com/vanessamarely</div>
                 </div>
             </div>
         </div>
