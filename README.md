@@ -1,4 +1,4 @@
-# Web MCP & Debugging Workshop
+# Web MCP & Debugging
 
 Este repositorio contiene una presentación en formato web sobre **Web MCP y debugging moderno**.
 
