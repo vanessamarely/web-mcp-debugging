@@ -13,12 +13,9 @@ Este repositorio contiene una presentación en formato web sobre **Web MCP y deb
 
 ## Cómo ver la presentación
 
-1. Abre el archivo `/tmp/workspace/vanessamarely/web-mcp-debugging/index.html` en tu navegador.
+1. Abre el archivo `vanessamarely/web-mcp-debugging/index.html` en tu navegador de manera local o usa https://vanessamarely.github.io/web-mcp-debugging/.
 2. Navega con:
    - **Espacio**, **Enter** o **→** para avanzar.
    - **←** para retroceder.
    - También puedes usar los botones inferiores o gestos táctiles (swipe).
 
-## Perfil de la ponente
-
-La presentación incluye una sección “Sobre mí” con información de **Vanessa Marely** y enlaces a sus redes.
