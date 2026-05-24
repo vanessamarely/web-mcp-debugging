@@ -18,4 +18,6 @@ Este repositorio contiene una presentación en formato web sobre **Web MCP y deb
    - **Espacio**, **Enter** o **→** para avanzar.
    - **←** para retroceder.
    - También puedes usar los botones inferiores o gestos táctiles (swipe).
+  
+   Demo: https://self-diagnosing-saas.vercel.app/
 
